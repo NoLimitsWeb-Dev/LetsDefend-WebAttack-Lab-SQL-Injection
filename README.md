@@ -230,10 +230,17 @@ The ticket was officially submitted to the system queue with a final closed verd
 <img width="1917" height="609" alt="image" src="https://github.com/user-attachments/assets/109e4d6b-d66e-4a6e-8150-271a3dd57349" />
 <img width="1902" height="806" alt="image" src="https://github.com/user-attachments/assets/10bd6ebe-67d0-4344-82fe-366213633ba7" />
 
+---
 
 <img width="1899" height="634" alt="image" src="https://github.com/user-attachments/assets/b119c0e2-19c6-472a-a748-caae036d45ce" />
 <img width="1902" height="696" alt="image" src="https://github.com/user-attachments/assets/07c0335d-ea77-4cad-bc04-a2a8ef6827a7" />
 <img width="1910" height="316" alt="image" src="https://github.com/user-attachments/assets/0014f703-b76b-4aae-b417-e677cd0d30be" />
 
+---
+## Lessons Learned & Architectural Defenses
 
-
+To prevent future similar attacks from escalating, the following three protective layers are recommended for deployment:
+* **Parameterized Queries (Prepared Statements):** Developers must modify the application search source code to utilize parameterized database inputs. This forces the SQL database engine to process user inputs strictly as parameters/literals rather than executable code strings, neutralizing SQL Injection vectors entirely at the application code layer.
+* **WAF Layer Signature Tuning:** The perimeter Web Application Firewall rule baseline should be updated from an inspection mode to an active **Drop/Block** mode for common tautology signatures (`OR 1=1`) to drop the connections before reaching internal IIS/Apache application handlers.
+* **Automated Threat Intelligence Feeds:** Integrate volatile cloud hosting provider ranges (like DigitalOcean, AWS, and Linode outbound blocks) into automated edge firewalls to block incoming scan pools exhibiting high AbuseIPDB report velocities.
+---
