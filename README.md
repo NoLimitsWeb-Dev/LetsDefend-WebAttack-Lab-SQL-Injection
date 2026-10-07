@@ -20,25 +20,46 @@ This document serves as an exhaustive, step-by-step forensic walkthrough detaili
 The lifecycle of this incident began in the **Monitoring Channel** dashboard of the SIEM platform. 
 * **The Alert:** System flagged `EventID 115` under the rule descriptor **SOC165 - Possible SQL Injection Payload Detected**.
 * **Initial Assessment:** The system classified this under the **Web Attack** category with a **High Severity** weighting. Because SQL Injection attempts possess the ability to read, modify, or delete sensitive administrative database tables, the alert was immediately claimed to prevent simultaneous processing by other analysts.
-* **Playbook Initiation:** The incident was migrated into the **Case Management Channel**, creating an active incident ticket to systematically lock ownership and establish an investigation audit trail.
 
 ---
 <img width="1914" height="902" alt="image" src="https://github.com/user-attachments/assets/ac785e81-5bcc-4c95-9f85-afd6120961b5" />
 
+---
 * Click Take Ownership <img width="67" height="48" alt="image" src="https://github.com/user-attachments/assets/a0f5ff95-b7e2-4414-bfeb-0dba09d37241" /> on the Main Channel, to take ownership of the alert case and this will move the alert into the Investigation Channel.
-
-
-<img width="1916" height="708" alt="image" src="https://github.com/user-attachments/assets/0706a59a-453a-48a5-a0c8-6a51140e8ce3" />
+* In the Investigation Channel -- Action -- Click >> to Create the Ticket
 
 <img width="1537" height="427" alt="image" src="https://github.com/user-attachments/assets/a4d759ca-9964-4397-9e51-62eb2413678d" />
+<img width="1916" height="708" alt="image" src="https://github.com/user-attachments/assets/0706a59a-453a-48a5-a0c8-6a51140e8ce3" />
 
+* Details of the alert
+---
 <img width="1908" height="901" alt="image" src="https://github.com/user-attachments/assets/2ffc8ace-b618-4626-83bf-1ee7a4cfac83" />
 
+* Click on the **Continue Button**
+
+---
 <img width="1919" height="906" alt="image" src="https://github.com/user-attachments/assets/38ab3bc4-093f-4a97-a1c2-60c9720462dc" />
 
+* Click on the **OK Button**
+
+---
 <img width="1903" height="643" alt="image" src="https://github.com/user-attachments/assets/1a0b9280-095b-4904-b5fb-8ef9e6158d07" />
 
-<img width="1221" height="851" alt="image" src="https://github.com/user-attachments/assets/4043ef39-62e4-4610-bd18-bb9b053051dd" />
+* **Playbook Initiation:** The incident was migrated into the **Case Management Channel**, creating an active incident ticket to systematically lock ownership and establish an investigation audit trail.
+
+---
+### Step 2: Traffic Path Analysis & Asset Scoping
+Mapping out the environmental scope of the connection using network connection details:
+<img width="1916" height="708" alt="image" src="https://github.com/user-attachments/assets/0706a59a-453a-48a5-a0c8-6a51140e8ce3" />
+
+
+1. **Directionality:** Traffic originated externally from the Internet and targeted an internal corporate demilitarized zone (DMZ) segment.
+2. **Attacker Host:** `167.99.169.17` (Source)
+3. **Internal Target:** `172.16.17.18` (Destination)
+4. **Target Asset Profile:** Cross-referencing the destination IP within the **Endpoint Security** center identified the host as `WebServer1001`. The machine runs a 64-bit architecture built on **Windows Server 2019** and is managed via the `webadmin` administrative profile.
+5. **Port Audit:** The connection hit port **443 (HTTPS)**, verifying that the attack payload was wrapped inside encrypted SSL/TLS layers to bypass basic signature-matching perimeter sensors.
+
+---
 
 <img width="1886" height="736" alt="image" src="https://github.com/user-attachments/assets/1cd2a02e-893c-460c-a247-f93e6b6b45b1" />
 
